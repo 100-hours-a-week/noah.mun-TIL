@@ -1,0 +1,75 @@
+# git 명령어 응용
+
+### 3-way merge
+
+**일반적인 병합 방식 (자동으로 처리)**
+
+- 병합할 두 브랜치와 공통 조상 커밋을 이용하여 병합하는 방식
+    - Merge 전
+    
+    ![IMG_03BF4372CCAF-1.jpeg](attachment:e337ab16-c182-49a6-bdcb-f0f3046737a0:IMG_03BF4372CCAF-1.jpeg)
+    
+    - Merge 후
+
+![IMG_DB49E1084E59-1.jpeg](attachment:0f792876-3de0-44d8-9265-0a1b756aaf58:IMG_DB49E1084E59-1.jpeg)
+
+```markdown
+git merge
+
+- 현재 브랜치와 병합 대상의 관계가 fast-forward 관계 여부와 관계없이 merge 커밋을 생성하여 병합
+git merge --no-ff
+```
+
+---
+
+### fast-forward merge (빨리감기 병합)
+
+새로운 브랜치를 만들고 해당 브랜치에서 변경사항을 커밋 후 메인 브랜치에 그대로 적용하는 병합 방법
+
+**메인 브랜치가 새로운 커밋을 추가하지 않은 경우에만 가능**
+
+- Merge 전
+
+![IMG_549C750CCD66-1.jpeg](attachment:86d0a960-dc4c-4cc6-a95e-68fe43e5fb84:IMG_549C750CCD66-1.jpeg)
+
+- Merge 후
+    
+    ![JPEG 이미지-4F03-B2B7-D1-0.jpeg](attachment:b9aa64e1-2221-4ba8-8df2-c471dfe4c2a3:JPEG_이미지-4F03-B2B7-D1-0.jpeg)
+    
+
+- fast-forward는 커밋 히스토리를 깔끔하게 유지할 수 있음
+- 기존의 커밋 히스토리가 사라질 수 있어 유의해야 함 (과거의 기록을 볼 수가 ❌)
+
+```markdown
+- 현재 브랜치와 병합할 브랜치가 fast-forward일 경우 fast-forward 병합을 진행
+- 그렇지 않은 경우 3-way-merge를 진행하여 merge 커밋을 생성하여 병합
+git merge
+
+- git merge -ff <브랜치명>
+git merge --ff feature
+
+- 현재 브랜치와 병합할 브랜치가 ff 관계인 경우에만 병합을 진행하고, 그렇지 않은 경우에는 병합 ❌
+git merge --ff-only feature
+```
+
+---
+
+### squash and merge
+
+새 브랜치의 커밋기록을 으깨서 메인 브랜치에 하나로 넣음
+
+- Merge 전
+
+![IMG_E257450CCAF9-1.jpeg](attachment:9dc70eb1-b4ec-46d1-84ab-808df829de72:IMG_E257450CCAF9-1.jpeg)
+
+- Merge 후
+
+![IMG_45A1541DAC8E-1.jpeg](attachment:bafb6115-31f0-4600-a461-70fbfd86ecfc:IMG_45A1541DAC8E-1.jpeg)
+
+```markdown
+- 병합 대상 브랜치의 모든 커밋을 하나의 커밋으로 압축하여 현재 브랜치로 가져옴
+- 이때 merge 커밋 없이 실제 작업이 이루어지는 따로의 커밋은 존재 ❌
+
+- git merge --squash <브랜치명>
+git merge --squash feature
+```
